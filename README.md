@@ -49,6 +49,18 @@ A sets cloud cover and B adds billow detail. One pixel costs 34 noise calls and 
 
 Where m = 0 the pixel is sky blue (51, 102, 153). Where m = 1 it is cloud, shaded by B.
 
+## Geometry
+
+![simplex skew](img/geometry-simplex.svg)
+
+The skew maps image space onto a square grid. Each grid cell splits along its diagonal into two triangles. Mapped back, those triangles are equilateral. A pixel's three nearest lattice points are the corners of the triangle it falls in.
+
+![octaves](img/geometry-octaves.svg)
+
+Every octave multiplies the sample point by R, which doubles the scale and rotates by 36.87°. In the image, each octave's noise cells are half the size of the previous octave's and turned the other way. The rotation keeps the octaves' lattice axes from lining up, which would show as grid artifacts.
+
+![passes](img/geometry-passes.svg)
+
 ## Benchmark loop
 
 - One worker thread runs per logical CPU. CPU-Z hands out one 1024-pixel row at a time to whichever worker is idle.
