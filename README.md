@@ -4,7 +4,7 @@ The CPU-Z benchmark (version 17.01.64, as shipped in CPU-Z 2.15) renders this im
 
 ![clouds](img/clouds.gif)
 
-Animated above, and as [img/clouds-pan.mp4](img/clouds-pan.mp4): pass *p* draws pixels (x + p, y + p), so each pass shifts the same cloud field one pixel diagonally.
+The caption shows CPU-Z's own score on aether (run under Wine). Animated above, and as [img/clouds-pan.mp4](img/clouds-pan.mp4): pass *p* draws pixels (x + p, y + p), so each pass shifts the same cloud field one pixel diagonally.
 
 `src/kernel.c` is a C reconstruction of the pixel code. Its output is bit-exact against CPU-Z's own functions: zero float difference over 3.1M pixels. Build and render a frame:
 
