@@ -54,6 +54,6 @@ Where m = 0 the pixel is sky blue (51, 102, 153). Where m = 1 it is cloud, shade
 - One worker thread runs per logical CPU. CPU-Z hands out one 1024-pixel row at a time to whichever worker is idle.
 - Score = pixels finished ÷ elapsed ms. The multi-threaded phase runs first, then the single-threaded one, 10 s each.
 
-On a Ryzen 9 9950X, CPU-Z under Wine scored 744 single / 8711 multi on an idle machine. The native C port, compiled to match MSVC's code, scored 817.66 / 10821.63 in the run shown above (idle, load average 0.91).
+On a Ryzen 9 9950X, CPU-Z under Wine scored 744 single / 8711 multi on an idle machine. The native C port, compiled to match MSVC's code, scored 817 / 10,821 in the run shown above (idle, load average 0.91).
 
 Academic analysis. This repo does not contain the CPU-Z binary or its disassembly. CPU-Z belongs to CPUID.
