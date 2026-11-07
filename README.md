@@ -2,9 +2,9 @@
 
 The CPU-Z benchmark (version 17.01.64, as shipped in CPU-Z 2.15) renders this image. The picture never appears on screen: CPU-Z draws it into a 1024×1024 RGBA buffer, and the score is how many pixels per millisecond the CPU finishes in 10 seconds.
 
-![pass 0](img/frame0.jpg)
+![clouds](img/clouds.gif)
 
-[img/clouds-pan.mp4](img/clouds-pan.mp4): pass *p* draws pixels (x + p, y + p), so each pass shifts the same cloud field one pixel diagonally.
+Animated above, and as [img/clouds-pan.mp4](img/clouds-pan.mp4): pass *p* draws pixels (x + p, y + p), so each pass shifts the same cloud field one pixel diagonally.
 
 `src/kernel.c` is a C reconstruction of the pixel code. Its output is bit-exact against CPU-Z's own functions: zero float difference over 3.1M pixels. Build and render a frame:
 
