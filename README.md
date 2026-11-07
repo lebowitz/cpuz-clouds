@@ -2,14 +2,15 @@
 
 The CPU-Z benchmark (version 17.01.64, as shipped in CPU-Z 2.15) renders this image. The picture never appears on screen: CPU-Z draws it into a 1024×1024 RGBA buffer, and the score is how many pixels per millisecond the CPU finishes in 10 seconds.
 
-![clouds](img/clouds.gif)
+![live score](img/live-score.gif)
 
-The caption shows CPU-Z's own score on aether (run under Wine). Animated above, and as [img/clouds-pan.mp4](img/clouds-pan.mp4): pass *p* draws pixels (x + p, y + p), so each pass shifts the same cloud field one pixel diagonally.
+This is a real 10 s + 10 s run of the C port (`src/bench.c`) on a Ryzen 9 9950X, played at real speed. The multi-thread phase runs first and the single-thread phase second, and each starts from a cleared buffer. The counter is the live score, pixels finished ÷ elapsed ms, the figure CPU-Z updates during its own run. Multi fills the image in about 0.1 s. Single paints it row by row in about 1.3 s per pass. Each pass draws pixels (x + p, y + p), so every pass shifts the same cloud field one pixel diagonally. [img/clouds-pan.mp4](img/clouds-pan.mp4) shows that drift over 720 passes.
 
 `src/kernel.c` is a C reconstruction of the pixel code. Its output is bit-exact against CPU-Z's own functions: zero float difference over 3.1M pixels. Build and render a frame:
 
 ```
 gcc -O2 -ffp-contract=off -o render src/render.c src/kernel.c && ./render . 0
+gcc -O2 -msse2 -mfpmath=sse -fno-tree-vectorize -ffp-contract=off -o bench src/bench.c src/kernel.c -lpthread && ./bench
 ```
 
 ## The math
@@ -53,6 +54,6 @@ Where m = 0 the pixel is sky blue (51, 102, 153). Where m = 1 it is cloud, shade
 - One worker thread runs per logical CPU. CPU-Z hands out one 1024-pixel row at a time to whichever worker is idle.
 - Score = pixels finished ÷ elapsed ms. The multi-threaded phase runs first, then the single-threaded one, 10 s each.
 
-On a Ryzen 9 9950X, CPU-Z under Wine scores 744 single / 8711 multi. The native C port, compiled to match MSVC's code, scores about 934 / 11266. Those are build-1 figures, from one idle run each.
+On a Ryzen 9 9950X, CPU-Z under Wine scored 744 single / 8711 multi on an idle machine. The native C port, compiled to match MSVC's code, scored 817.66 / 10821.63 in the run shown above (idle, load average 0.91).
 
 Academic analysis. This repo does not contain the CPU-Z binary or its disassembly. CPU-Z belongs to CPUID.
